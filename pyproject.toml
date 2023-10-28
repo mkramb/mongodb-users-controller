@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "mongodb-users-controller"
+version = "0.1.0"
+description = ""
+authors = ["Mitja Kramberger <mitja.kramberger@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+kubecrd = "^0.5.0"
+kopf = "^1.36.2"
+apischema = "^0.18.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
