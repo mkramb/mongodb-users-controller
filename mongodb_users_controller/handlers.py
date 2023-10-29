@@ -1,33 +1,46 @@
 import kopf
 import asyncio
+import logging
+import loguru
 
-from mongodb_users_controller.api import get_client
-from mongodb_users_controller.crds import MongoUserResource
+from mongodb_users_controller._api import get_client
+from mongodb_users_controller._crds import MongoUserResource
+from mongodb_users_controller._models import MongoUserResourceConfig
 
 LOCK: asyncio.Lock
 
 
 @kopf.on.startup()
-async def on_startup(logger, **kwargs):
+async def on_startup(**kwargs):
     global LOCK
     LOCK = asyncio.Lock()
 
-    logger.info("Installing CRDs")
+    loguru.logger.info("Installing CRDs")
     kubernetes_client = get_client()
     MongoUserResource.install(kubernetes_client, exist_ok=True)
 
 
-@kopf.on.create("mongouserresources")
-async def on_create(spec, name, namespace, logger, **kwargs):
-    resource = MongoUserResource(**spec)
+@kopf.on.create(MongoUserResourceConfig.kind)
+async def on_create(body, namespace, **kwargs):
+    try:
+        kubernetes_client = get_client()
+        resource = await MongoUserResourceConfig(
+            body, namespace=namespace, api=kubernetes_client
+        )
 
-    print(f"CREATE ===> {resource.username}")
-    print(f"CREATE ===> {resource.password}")
+        await resource.user_create()
+    except logging.exception as error:
+        loguru.logger.error("Error creating Mongo User", error)
 
 
-@kopf.on.delete("mongouserresources")
-async def on_delete(spec, name, namespace, logger, **kwargs):
-    resource = MongoUserResource(**spec)
+@kopf.on.delete(MongoUserResourceConfig.kind)
+async def on_delete(body, namespace, **kwargs):
+    try:
+        kubernetes_client = get_client()
+        resource = await MongoUserResourceConfig(
+            body, namespace=namespace, api=kubernetes_client
+        )
 
-    print(f"DELETE ===> {resource.username}")
-    print(f"DELETE ===> {resource.password}")
+        await resource.user_delete()
+    except logging.exception as error:
+        loguru.logger.error("Error deleting Mongo User", error)

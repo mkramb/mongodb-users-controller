@@ -48,11 +48,7 @@ LOCAL=true kopf run mongodb_users_controller/handlers.py  \
 Add example CRD item:
 
 ```
-LOCAL=true python mongodb_users_controller/crds.py \
+LOCAL=true python mongodb_users_controller/cli.py \
     --username example-user \
     --password example-secret-password
 ```
-
-## TODO
-- prepare "krs8" APOObject to encapsulate logic
-- implement adding a new user and removal
