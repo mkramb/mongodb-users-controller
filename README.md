@@ -35,6 +35,12 @@ tilt up
 tilt down
 ```
 
+To active and start a shell in virtual environment:
+
+```
+poetry shell
+```
+
 Run controller against local config:
 
 ```
