@@ -19,8 +19,8 @@ poetry install
 Setting up local cluster:
 
 ```
-./scripts/kind-cluster-delete.sh
-./scripts/kind-cluster-create.sh
+./scripts/delete-kind-cluster.sh
+./scripts/create-kind-cluster.sh
 ```
 
 ## Usage
@@ -31,5 +31,28 @@ Running full k8s stack:
 tilt up
 
 # to stop current pods
+# and clear any defined CRDs
 tilt down
 ```
+
+Run controller against local config:
+
+```
+LOCAL=true kopf run mongodb_users_controller/handlers.py  \
+    --namespace=default --verbose
+```
+
+
+## Tips
+
+Add example CRD item:
+
+```
+LOCAL=true python mongodb_users_controller/crds.py \
+    --username example-user \
+    --password example-secret-password
+```
+
+## TODO
+- prepare "krs8" APOObject to encapsulate logic
+- implement adding a new user and removal
