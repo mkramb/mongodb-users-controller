@@ -1,11 +1,13 @@
+import decouple
 from kr8s.asyncio.objects import APIObject
 from pymongo import MongoClient
 
 from mongodb_users_controller.crds import MongoUserResource
-from mongodb_users_controller.settings import MONGO_URI
+
+MONGO_URI = decouple.config("MONGO_URI")
 
 
-class MongoUserResourceConfig(APIObject):
+class MongoUserModel(APIObject):
     version = f"{MongoUserResource.__group__}/{MongoUserResource.__version__}"
     kind = MongoUserResource.__name__.lower()
     singular = MongoUserResource.singular()

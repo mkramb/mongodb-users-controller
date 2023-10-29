@@ -38,6 +38,7 @@ tilt down
 Run controller against local config:
 
 ```
+export MONGO_URI="mongodb://localhost:27017/platform?replicaSet=tilt&directConnection=true"
 kopf run mongodb_users_controller/handlers.py --namespace=default
 ```
 

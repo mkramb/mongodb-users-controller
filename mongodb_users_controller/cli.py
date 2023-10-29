@@ -9,7 +9,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--username", required=True)
     parser.add_argument("--password", required=True)
-    parser.add_argument("--roles", required=True)
+    parser.add_argument("--roles", default="")
 
     args = parser.parse_args()
     kubernetes_client = get_client()

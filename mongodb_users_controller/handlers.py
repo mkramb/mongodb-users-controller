@@ -4,7 +4,7 @@ import loguru
 
 from mongodb_users_controller.client import get_client
 from mongodb_users_controller.crds import MongoUserResource
-from mongodb_users_controller.models import MongoUserResourceConfig
+from mongodb_users_controller.models import MongoUserModel
 
 LOCK: asyncio.Lock
 
@@ -20,17 +20,17 @@ async def on_startup(**kwargs):
 
 
 @loguru.logger.catch
-@kopf.on.create(MongoUserResourceConfig.kind)
+@kopf.on.create(MongoUserModel.kind)
 async def on_create(body, namespace, **kwargs):
-    resource = MongoUserResourceConfig(body, namespace=namespace, api=get_client())
+    resource = MongoUserModel(body, namespace=namespace, api=get_client())
     await resource.user_create()
     loguru.logger.info(f"Created User: {resource.spec.username}")
 
 
 @loguru.logger.catch
-@kopf.on.delete(MongoUserResourceConfig.kind)
+@kopf.on.delete(MongoUserModel.kind)
 async def on_delete(body, namespace, **kwargs):
-    resource = MongoUserResourceConfig(body, namespace=namespace, api=get_client())
+    resource = MongoUserModel(body, namespace=namespace, api=get_client())
     await resource.user_delete()
 
     loguru.logger.info(f"Deleted User: {resource.spec.username}")

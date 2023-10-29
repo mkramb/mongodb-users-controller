@@ -1,7 +1,12 @@
+import os
+import decouple
 import kubernetes
 from loguru import logger
 
-from mongodb_users_controller.settings import KUBE_PROD, KUBE_CONFIG
+KUBE_PROD = decouple.config("KUBE_PROD", default=False, cast=bool)
+KUBE_CONFIG = decouple.config(
+    "KUBE_CONFIG", default=f"{os.path.expanduser('~')}/.kube/config"
+)
 
 
 def get_client():
