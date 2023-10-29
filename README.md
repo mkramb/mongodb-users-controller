@@ -53,7 +53,7 @@ python mongodb_users_controller/cli.py \
     --roles read,readWrite
 ```
 
-To check defined users using mongo shell:
+To check available users using mongo shell:
 
 ```
 use admin
