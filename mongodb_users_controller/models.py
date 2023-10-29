@@ -21,7 +21,9 @@ class MongoUserResourceConfig(APIObject):
             pwd=self.spec.password,
             roles=self.spec.roles,
         )
+        client.close()
 
     async def user_delete(self):
         client = MongoClient(MONGO_URI)
         client.get_database().command("dropUser", self.spec.username)
+        client.close()
