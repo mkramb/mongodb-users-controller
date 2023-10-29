@@ -1,3 +1,4 @@
+from email.policy import default
 import os
 import decouple
 
@@ -6,4 +7,7 @@ KUBE_CONFIG = decouple.config(
     "KUBE_CONFIG", default=f"{os.path.expanduser('~')}/.kube/config"
 )
 
-MONGO_URI = "mongodb://localhost:27017/platform?replicaSet=tilt&directConnection=true"
+MONGO_URI = decouple.config(
+    "MONGO_URI",
+    default="mongodb://localhost:27017/platform?replicaSet=tilt&directConnection=true",
+)
