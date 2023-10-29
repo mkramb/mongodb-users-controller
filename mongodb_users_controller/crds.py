@@ -3,12 +3,6 @@ from kubecrd import schemabase
 from apischema import schema
 
 
-@dataclass
-class UserRole:
-    role: str
-    database: str
-
-
 @dataclass()
 class MongoUserResource(schemabase.KubeResourceBase):
     __group__ = "mkramb.com"
@@ -16,8 +10,7 @@ class MongoUserResource(schemabase.KubeResourceBase):
 
     username: str
     password: str
-
-    roles: list[UserRole] = field(
+    roles: list[str] = field(
         default_factory=list,
         metadata=schema(
             description="List of User roles",

@@ -1,19 +1,15 @@
-import os
 import kubernetes
 from loguru import logger
-from decouple import config
+
+from mongodb_users_controller.settings import KUBE_PROD, KUBE_CONFIG
 
 
 def get_client():
-    LOCAL = config("LOCAL", default=False, cast=bool)
-
-    if LOCAL:
-        logger.info("Loading from local k8s config")
-        user_home = os.path.expanduser("~")
-        kube_config = config("KUBE_CONFIG", default=f"{user_home}/.kube/config")
-        kubernetes.config.load_kube_config(config_file=kube_config)
-    else:
+    if KUBE_PROD:
         logger.info("Loading in-cluster config")
-        config.load_incluster_config()
+        kubernetes.config.load_incluster_config()
+    else:
+        logger.info("Loading from local k8s config")
+        kubernetes.config.load_kube_config(config_file=KUBE_CONFIG)
 
     return kubernetes.client.ApiClient()

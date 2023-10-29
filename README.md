@@ -38,8 +38,7 @@ tilt down
 Run controller against local config:
 
 ```
-LOCAL=true kopf run mongodb_users_controller/handlers.py  \
-    --namespace=default --verbose
+kopf run mongodb_users_controller/handlers.py --namespace=default
 ```
 
 
@@ -48,7 +47,15 @@ LOCAL=true kopf run mongodb_users_controller/handlers.py  \
 Add example CRD item:
 
 ```
-LOCAL=true python mongodb_users_controller/cli.py \
-    --username example-user \
-    --password example-secret-password
+python mongodb_users_controller/cli.py \
+    --username testuser \
+    --password secret-password \
+    --roles read,readWrite
+```
+
+To check defined users using mongo shell:
+
+```
+use admin
+db.system.users.find()
 ```

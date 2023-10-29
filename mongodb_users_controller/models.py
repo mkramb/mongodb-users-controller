@@ -1,6 +1,8 @@
 from kr8s.asyncio.objects import APIObject
+from pymongo import MongoClient
 
 from mongodb_users_controller.crds import MongoUserResource
+from mongodb_users_controller.settings import MONGO_URI
 
 
 class MongoUserResourceConfig(APIObject):
@@ -12,11 +14,14 @@ class MongoUserResourceConfig(APIObject):
     namespaced = True
 
     async def user_create(self):
-        print("Creating USER")
-        print(f"USERNAME ===> {self.spec.username}")
-        print(f"PASSWORD ===> {self.spec.password}")
+        client = MongoClient(MONGO_URI)
+        client.get_database().command(
+            "createUser",
+            self.spec.username,
+            pwd=self.spec.password,
+            roles=self.spec.roles,
+        )
 
     async def user_delete(self):
-        print("Deleting USER")
-        print(f"USERNAME ===> {self.spec.username}")
-        print(f"PASSWORD ===> {self.spec.password}")
+        client = MongoClient(MONGO_URI)
+        client.get_database().command("dropUser", self.spec.username)
