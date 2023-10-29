@@ -3,9 +3,9 @@ import asyncio
 import logging
 import loguru
 
-from mongodb_users_controller._api import get_client
-from mongodb_users_controller._crds import MongoUserResource
-from mongodb_users_controller._models import MongoUserResourceConfig
+from mongodb_users_controller.client import get_client
+from mongodb_users_controller.crds import MongoUserResource
+from mongodb_users_controller.models import MongoUserResourceConfig
 
 LOCK: asyncio.Lock
 

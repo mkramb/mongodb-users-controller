@@ -1,6 +1,6 @@
 from kr8s.asyncio.objects import APIObject
 
-from mongodb_users_controller._crds import MongoUserResource
+from mongodb_users_controller.crds import MongoUserResource
 
 
 class MongoUserResourceConfig(APIObject):

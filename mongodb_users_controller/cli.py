@@ -1,8 +1,8 @@
 import json
 import argparse
 
-from mongodb_users_controller._api import get_client
-from mongodb_users_controller._crds import MongoUserResource
+from mongodb_users_controller.client import get_client
+from mongodb_users_controller.crds import MongoUserResource
 
 
 def main():

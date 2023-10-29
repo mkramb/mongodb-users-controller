@@ -2,8 +2,6 @@ from dataclasses import dataclass, field
 from kubecrd import schemabase
 from apischema import schema
 
-from mongodb_users_controller._api import get_client
-
 
 @dataclass
 class UserRole:
