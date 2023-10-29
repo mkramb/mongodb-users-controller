@@ -1,5 +1,7 @@
 # Mongo Users Controller
 
+> Kubernetes Controller for managing Mongo Users (and roles), for community addition.
+
 ## Prerequisite
 
 ```
