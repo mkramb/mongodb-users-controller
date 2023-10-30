@@ -20,7 +20,7 @@ class MongoUserResource(schemabase.KubeResourceBase):
 
 
 def main():
-    print(MongoUserResource().crd_schema())
+    print(MongoUserResource.crd_schema())
 
 
 if __name__ == "__main__":
