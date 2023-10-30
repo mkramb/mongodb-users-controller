@@ -56,10 +56,7 @@ kopf run mongodb_users_controller/handlers.py --namespace=default
 Add example CRD item:
 
 ```
-python mongodb_users_controller/cli.py \
-    --username testuser \
-    --password secret-password \
-    --roles read,readWrite
+python mongodb_users_controller/cli.py --username testuser --password secret-password --roles read,readWrite | kubectl apply -f -
 ```
 
 To check available users using mongo shell:

@@ -19,16 +19,17 @@ async def on_startup(**kwargs):
     MongoUserResource.install(kubernetes_client, exist_ok=True)
 
 
-@loguru.logger.catch
 @kopf.on.create(MongoUserModel.kind)
+@loguru.logger.catch
 async def on_create(body, namespace, **kwargs):
     resource = MongoUserModel(body, namespace=namespace, api=get_client())
     await resource.user_create()
+
     loguru.logger.info(f"Created User: {resource.spec.username}")
 
 
-@loguru.logger.catch
 @kopf.on.delete(MongoUserModel.kind)
+@loguru.logger.catch
 async def on_delete(body, namespace, **kwargs):
     resource = MongoUserModel(body, namespace=namespace, api=get_client())
     await resource.user_delete()
