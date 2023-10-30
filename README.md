@@ -65,3 +65,10 @@ To check available users using mongo shell:
 use admin
 db.system.users.find()
 ```
+
+Inspect CRDs in the cluster:
+
+```
+kubectl get crds
+kubectl get mongouserresources.mkramb.com -o yaml
+```

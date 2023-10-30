@@ -10,6 +10,7 @@ LOCK: asyncio.Lock
 
 
 @kopf.on.startup()
+@loguru.logger.catch()
 async def on_startup(**kwargs):
     global LOCK
     LOCK = asyncio.Lock()
@@ -20,7 +21,7 @@ async def on_startup(**kwargs):
 
 
 @kopf.on.create(MongoUserModel.kind)
-@loguru.logger.catch
+@loguru.logger.catch()
 async def on_create(body, namespace, **kwargs):
     resource = MongoUserModel(body, namespace=namespace, api=get_client())
     await resource.user_create()
@@ -29,7 +30,7 @@ async def on_create(body, namespace, **kwargs):
 
 
 @kopf.on.delete(MongoUserModel.kind)
-@loguru.logger.catch
+@loguru.logger.catch()
 async def on_delete(body, namespace, **kwargs):
     resource = MongoUserModel(body, namespace=namespace, api=get_client())
     await resource.user_delete()
